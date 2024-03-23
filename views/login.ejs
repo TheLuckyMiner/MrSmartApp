@@ -1,0 +1,41 @@
+
+    <section class="auth">
+        <div class="container">
+            <h1 class="main__title">
+                Авторизация
+            </h1>
+            <div class="main__line"></div>
+            <div class="auth__box">
+                <div class="auth__buttons">
+                    <div id="auth__btn-bg"></div>
+                    <button class="auth__btn" type="button" onclick="login()">Вход</button>
+                    <button class="auth__btn" type="button" onclick="register()">Регистрация</button>
+                </div>
+                <form id='login' action='/login' method="post" class="auth__form">
+                    <div class="auth__form-inner">
+                        <input type="email" name="email" class="auth__input" placeholder="Email" required>
+                        <input type="password" name='password' class="auth__input" placeholder="Пароль" required>                        
+                    </div>     
+                    <input type="submit" id="login-btn" class="auth__submit" value="Войти">               
+                    
+                </form>
+                <form id="register" action="/register" method="post" class="auth__form">                    
+                    <input type="text" name="name" class="auth__input" placeholder="Имя пользователя" required>
+                    <input type="email" name="email" class="auth__input" placeholder="Email" required>
+                    <input type="password" name="password" class="auth__input" placeholder="Пароль" required>
+                    <input type="password" name="password2" class="auth__input" placeholder="Повторите пароль" required>
+                    <select class="select auth__input" id="level" name="level" required>
+                        <option value="easy" selected disabled>Выберите уровень</option>
+                        <option value="Elmentary">Начальный</option>
+                        <option value="Intermediate">Средний</option>
+                        <option value="Professional">Продвинутый</option>
+                    </select>
+                    <p class="auth__terms">Нажимая кнопку зарегистрироваться, вы автоматически соглашаетесь с <a href='agree' class="terms__link">пользовательским соглашением</a>.</p>
+                    <input type="submit" id='register-btn' class="auth__submit" value="Зарегистрироваться">
+                    
+                </form>
+            </div>
+        </div>
+    </section> 
+
+<script src="js/auth.js"></script>

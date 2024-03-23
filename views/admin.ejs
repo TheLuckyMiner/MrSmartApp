@@ -1,0 +1,51 @@
+<section class="main">
+    <div class="container">
+        <h1 class="main__title">
+            Панель администратора
+        </h1>
+        <div class="main__line"></div>
+        <div class="stats__card">
+            <div class="stats__header">
+                <div class="stats__logo-inner">
+                    <img src="images/chart.svg" alt="->" class="stats__logo">
+                </div>
+                <p class="stats__title">Статистика</p>
+            </div>
+            <div class="stats__main">
+                <div class="stats__item">
+                    <div class="stats__img-inner"><img src="images/stats.svg" alt="" class="stats__img"></div>
+                    <p class="stats__number"><%= Infodata.Users %></p>
+                    <p class="stats__sign">Пользователей</p>
+                </div>
+                <div class="stats__item">
+                    <div class="stats__img-inner"><img src="images/stats2.svg" alt="" class="stats__img"></div>
+                    <p class="stats__number"><%= Infodata.Lessons %></p>
+                    <p class="stats__sign">Уроков</p>
+                </div>
+                <div class="stats__item">
+                    <div class="stats__img-inner"><img src="images/stats3.svg" alt="" class="stats__img"></div>
+                    <p class="stats__number"><%= Infodata.Tests%></p>
+                    <p class="stats__sign">Тестов</p>
+                </div>
+            </div>
+        </div>
+        <div class="stats__card pointer" onClick="window.location='people'">
+            <div class="stats__header">
+                <div class="stats__add-inner"><img src="images/people.svg" alt="+" class="stats__add"></div>
+                <p class="stats__title">Просмотр списка пользователей</p>
+            </div>
+        </div>
+        <div class="stats__card pointer" onClick="window.location='add-theme'">
+            <div class="stats__header">
+                <div class="stats__add-inner"><img src="images/add.svg" alt="+" class="stats__add"></div>
+                <p class="stats__title">Добавление темы</p>
+            </div>
+        </div>
+        <div class="stats__card pointer" onClick="window.location='add-test'">
+            <div class="stats__header">
+                <div class="stats__add-inner"><img src="images/add.svg" alt="+" class="stats__add"></div>
+                <p class="stats__title">Добавление теста</p>
+            </div>
+        </div>
+    </div>
+</section> 

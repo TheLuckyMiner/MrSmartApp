@@ -1,0 +1,55 @@
+<section class="side-bar">
+    <div class="side-bar__close">
+        <div id='close-btn' class="close__inner">
+            <img class="close__btn" src="" alt="X">
+        </div>
+    </div> 
+    <div class="side-bar__profile">
+        <img class="profile__img" src="../images/person-profile.png" alt="">
+        <p class="profile__name"><%= data[0].name %></p>
+        <p class="profile__role"><%= data[0].role %></p>
+        <a class="profile-view__btn" href="profile">Открыть профиль</a>
+    </div>
+    <div class="side-bar__menu">
+        <a href='/' class="side-bar__item">
+            <div class="side-bar__inner">
+                <div class="side-bar__content">
+                    <img src="../images/menu0.svg" alt="" class="side-bar__img">
+                </div>                    
+                <p class="side-bar__name">Главная страница</p>
+            </div>
+        </a>
+        <a href='/theory' class="side-bar__item">
+            <div class="side-bar__inner">
+                <div class="side-bar__content">
+                    <img src="../images/menu1.svg" alt="" class="side-bar__img">
+                </div>
+                <p class="side-bar__name">Теория</p>
+            </div>
+        </a>
+        <a href='/tests' class="side-bar__item">
+            <div class="side-bar__inner">
+                <div class="side-bar__content">
+                    <img src="../images/menu2.svg" alt="" class="side-bar__img">
+                </div>
+                <p class="side-bar__name">Тесты</p>
+            </div>
+        </a>
+        <a href='/stats' class="side-bar__item">
+            <div class="side-bar__inner">
+                <div class="side-bar__content">
+                    <img src="../images/menu3.svg" alt="" class="side-bar__img">
+                </div>
+                <p class="side-bar__name">Статистика</p>
+            </div>
+        </a>
+        <a href='/profile' class="side-bar__item">
+            <div class="side-bar__inner">
+                <div class="side-bar__content">
+                    <img src="../images/menu4.svg" alt="" class="side-bar__img">
+                </div>
+                <p class="side-bar__name">Профиль</p>                 
+            </div>
+        </a>
+    </div>
+</section>

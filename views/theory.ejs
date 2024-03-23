@@ -1,0 +1,41 @@
+<section class="main">
+    <div class="container">
+        <div class="main__inner">
+            <h1 class="main__title">
+                Теоретический материал
+            </h1>
+            <div class="main__line"></div>
+            <div class="main__lessons">
+
+<!-- <div class="main__lesson" onClick="window.location='#'">
+                    <div class="main__left">
+                        <div class="lesson__inner easy">
+                            <p class="lesson__level">A1</p>
+                        </div>
+                    </div>
+                    <div class="margin-right">
+                        <h3 class="lesson__title">1. English alphabet</h3>
+                        <p class="lesson__text">For students who is just beginning to learn English.</p>
+                    </div>
+                </div>   -->
+                
+                
+                <% Theorydata.forEach(lesson => { %>
+
+                    <div class="main__lesson" onClick="window.location='/lesson/<%= lesson._id %>'">
+                        <div class="main__left">
+                            <div class="lesson__inner <%= lesson.type %>">
+                                <p class="lesson__level"><%= lesson.level %></p>
+                            </div>
+                        </div>
+                        <div class="lesson__right">
+                            <h3 class="lesson__title"><%= lesson.title %></h3>
+                            <p class="lesson__text"><%= lesson.description %></p>
+                        </div>
+                    </div>  
+               <%  }) %>
+                
+            </div>
+        </div>
+    </div>
+</section> 

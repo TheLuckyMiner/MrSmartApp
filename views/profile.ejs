@@ -1,0 +1,44 @@
+<section class="main">
+    <div class="container">
+        <div class="main__inner">
+            <h1 class="main__title">
+                Профиль
+            </h1>
+            <div class="main__line"></div>
+            <div class="profile__inner">
+                <img class="profile__image" src="images/person-profile.png" alt="">
+                <div class="profile__right">
+                    <form action="" class="profile__form">
+                        <div class="profile__item">
+                            <label class=profile__label>Имя пользователя:</label>
+                            <input type="text" class="profile__input" id="username" name="username" value="<%= data[0].name %>">
+                        </div>
+                        <div class="profile__item">
+                            <label class=profile__label>Электронная почта:</label>
+                            <input type="email" class="profile__input" id="email" name="email" value="<%= data[0].email %>">
+                        </div>
+                        <div class="profile__item">
+                            <label class=profile__label>Пароль:</label>
+                            <input type="password" class="profile__input" id="password1" name="password1" value="">
+                        </div>
+                        <div class="profile__item" style="display:none;">
+                            <label class=profile__label>Повторите пароль:</label>
+                            <input type="password" class="profile__input" id="password2" name="password2" value="">
+                        </div>
+                        <div class="profile__item" style="display:none;">
+                            <label class=profile__label>Изменить фотографию профиля:</label>
+                            <input type="file" accept="image/*" class=" profile__input-img" id="profile-img" name="profile-img">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <button class='profile__update-btn' id="profile__change-btn"type="submit">Обновить</button>
+        </div>
+    </div>
+</section> 
+
+<script>
+    let profile_change = document.querySelector('#profile__change-btn').onclick = () => {
+    alert("Данные были успешно обновлены!");
+    }
+</script>

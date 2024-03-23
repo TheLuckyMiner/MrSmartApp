@@ -1,0 +1,21 @@
+<section class="main">
+    <div class="container">
+        <h1 class="main__title">
+            Список пользователей
+        </h1>
+        <div class="main__line"></div>
+        
+        <% people.forEach(person => { %> 
+        <div class="people__card pointer">
+            <div class="people__header">
+                <div class="status__main">
+                <div class="people__img-inner"><img src="images/profile.svg" alt="+" class="people__img"></div>
+                <p class="stats__title"><%=person.name%></p>
+                </div>
+                <p class="stats__role"><%= person.role%></p>
+            </div>
+        </div>
+        <%  }) %>
+
+    </div>
+</section> 

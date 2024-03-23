@@ -1,0 +1,27 @@
+<section class="main">
+    <div class="container">
+        <div class="main__inner">
+            <h1 class="main__title">
+                Тестовый материал
+            </h1>
+            <div class="main__line"></div>
+            <div class="main__lessons">                
+                
+               <% Testdata.forEach(lesson => { %> 
+
+                <div class="main__lesson"  onClick="window.location='/test/<%= lesson._id %>'">
+                    <div class="main__left">
+                        <div class="lesson__inner easy">
+                            <img class='lesson__img' src="../images/test-<%= lesson.type%>.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="lesson__right">
+                        <h3 class="lesson__title"><%= lesson.title %></h3>
+                        <p class="lesson__text"><%= lesson.description %></p>
+                    </div>
+                </div>
+                <%  }) %>
+            </div>
+        </div>
+    </div>
+</section> 

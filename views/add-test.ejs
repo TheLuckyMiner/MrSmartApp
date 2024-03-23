@@ -1,0 +1,40 @@
+<section class="main">
+    <div class="container">
+        <h1 class="main__title">
+            Панель администратора
+        </h1>
+        <div class="main__line"></div>
+
+        <div class="add-container">
+            <div class="form-title">
+                <p class="main__title">Добавление теста</p>
+            </div>                
+            <div class="form-container">
+            <form action="/add-test" method="post">
+                <div class="form-group">
+                    <label for="title">Название теста</label>
+                    <input type="text" name="title" placeholder="Введите название темы" required>
+                </div>
+                <div class="form-group">
+                    <label for="type">Уровень сложности</label>
+                    <select class="select-type" name="type">
+                        <option value="default" selected disabled>Выберите уровень сложности</option>
+                        <option value="easy">Легкий</option>
+                        <option value="normal">Средний</option>
+                        <option value="hard">Сложный</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание</label>
+                    <input type="text" name="description" placeholder="Введите описание" required>
+                </div>
+                <div class="form-group">
+                    <label for="body">Список вопросов</label>
+                    <input type="text" name="body" placeholder="Введите список вопросов" required>
+                </div>
+                <input type="submit" class="submit-btn" value="Добавить">
+            </form>
+            </div>
+        </div>
+    </div>
+</section> 
