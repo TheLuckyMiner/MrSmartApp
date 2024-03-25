@@ -324,6 +324,7 @@ body{
 
 .start__inner{
     max-width: 700px;
+    margin-bottom: 7vh;
 }
 
 .start-btn{
@@ -333,6 +334,11 @@ body{
     border-radius: 0.5rem;
     cursor: pointer;
     transition: 0.3s linear;
+
+}
+
+.start-btn:hover{
+    background-color: var(--purple);
 }
 
 /*Карточка урока*/
@@ -851,6 +857,10 @@ body{
     transition: 0.4s linear;
     margin-bottom: 2vh;
     cursor: pointer;
+}
+
+.people__card:nth-last-child(1){
+    margin-bottom: 5vh;
 }
 
 .people__card:hover{
