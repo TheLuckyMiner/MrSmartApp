@@ -151,7 +151,7 @@ router.post('/register', async(req,res) => {
             // res.status(201).json({message: 'User created', user});
             // res.render('auth-error');
             data = [userData];
-            res.render('profile', {locals, data});
+            res.render('login', {locals, data, layout: adminLayout});
         } catch(err){
             console.log(err);
             if(err.code === 11000){

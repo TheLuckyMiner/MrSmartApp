@@ -11,7 +11,7 @@
 
                 <div class="main__lesson"  onClick="window.location='/test/<%= lesson._id %>'">
                     <div class="main__left">
-                        <div class="lesson__inner easy">
+                        <div class="lesson__inner <%= lesson.type%>">
                             <img class='lesson__img' src="../images/test-<%= lesson.type%>.svg" alt="">
                         </div>
                     </div>
