@@ -1383,6 +1383,11 @@ body{
     }
 }
 
+@media(max-width: 300px){
+    .start-btn{
+        padding: 15px 30px;
+    }
+}
 
 /*ToDo list
 - Перекрасить иконки side-bar на светло-фиолетовый
