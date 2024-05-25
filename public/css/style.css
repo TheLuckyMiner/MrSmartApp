@@ -298,7 +298,7 @@ body{
 }
 
 .main__title{
-    margin: 2vh 0;
+    margin: 2vh 10px;
     font-weight: 500;
     font-size: 1.5rem;
 }
@@ -1133,6 +1133,25 @@ body{
     background-color: var(--purple);
 }
 
+/*Login error*/
+.error__inner{
+    display: flex;
+    justify-content: center;
+    margin: 5vh 10px 0;
+    align-items:center;
+}
+
+.login-error__text{
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-right: 20px;
+}
+
+.login-error__img{
+    max-width: 500px;
+    width:50%;
+    border: var(--stroke);
+}
 
 @keyframes shake {
 	10%,
@@ -1243,6 +1262,17 @@ body{
     .stats__info{
         margin-left:0;
     }
+    .error__inner{
+        flex-wrap: wrap;
+    }
+    .login-error__text{
+        margin-bottom: 2vh;
+    }
+    .login-error__img{
+        width: 80%;
+    }
+    
+    
 }
 
 @media(max-width:700px){
@@ -1312,6 +1342,10 @@ body{
     .form-group label{
         font-size: 0.8rem;
     }
+    .login-error__text{
+        font-size: 1rem;
+    }
+    
 }
 
 @media(max-width: 400px){

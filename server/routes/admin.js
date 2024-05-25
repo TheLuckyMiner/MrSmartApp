@@ -59,6 +59,29 @@ router.get('/error' , async(req,res) => {
         }
 });
 
+router.get('/login-error' , async(req,res) => {
+    try{
+        const locals = {
+            title: "Mister Smart | Ошибка входа",
+            description: "Приложение для изучения английского"
+        };
+        res.render('login-error', {locals, layout: adminLayout });
+        } catch (err){
+            console.log(err);
+        }
+});
+
+router.get('/register-error' , async(req,res) => {
+    try{
+        const locals = {
+            title: "Mister Smart | Ошибка регистрации",
+            description: "Приложение для изучения английского"
+        };
+        res.render('register-error', {locals, layout: adminLayout });
+        } catch (err){
+            console.log(err);
+        }
+});
 
 /*Проверка MiddleWare */
 const authMiddleware = (req,res, next) =>{
@@ -105,21 +128,25 @@ router.post('/login', async(req,res) => {
         };
         const {email, password} = req.body;
         const user = await User.findOne({email});
-        const userId = user._id;
-        const data = [user];
+        let userId, data;
+        try{
+            userId = user._id;
+            data = [user];
+        } catch(err){
+            res.status(401).redirect('login-error');
+        }
+        
         if(!user){
-            return res.status(401).json({message: "Неверный логин или пароль"});
+            res.status(401).redirect('login-error');
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        
         if(!isPasswordValid){
-            return res.status(401).json({message: "Неверный логин или пароль"});
+            res.status(403).redirect('login-error');
         }
 
         const token = jwt.sign({userId: user._id}, jwtSecret);
         res.cookie('token', token, {httpOnly:true});
         res.status(200).render('index', {locals, userId, data});
-        // res.render('login', {locals, layout: adminLayout })
     } catch (err){
         console.log(err);
         res.status(400).render('error');
@@ -155,7 +182,7 @@ router.post('/register', async(req,res) => {
         } catch(err){
             console.log(err);
             if(err.code === 11000){
-                res.status(409).json({message: "Пользователь уже существует"});
+                res.status(409).redirect('register-error');
             } else{
                 res.status(500).redirect('error');
             }
