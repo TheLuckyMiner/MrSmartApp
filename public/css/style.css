@@ -578,11 +578,25 @@ body{
     background-color:var(--light-purple);
     color: var(--white);
     transition: 0.3s linear;
-    margin: 10vh 0 12vh 2rem;
+    margin: 5vh 0 8vh 15px;
 }
 
 .profile__update-btn:hover{
     background-color: var(--purple);
+}
+
+.profile__exit-btn{
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 8px 15px;
+    background-color:var(--red);
+    color: var(--white);
+    transition: 0.3s linear;
+    margin: 5vh 0 8vh 30px;
+}
+
+.profile__exit-btn:hover{
+    background-color: var(--light-red);
 }
 
 /*Карточка авторизации*/
@@ -1381,7 +1395,6 @@ body{
     
 }
 
-/*В дальнейшем - удалить, т.к. будет создан bottom-bar*/
 @media(max-width: 380px){
     .logo-text{
         font-size: 1.2rem;
@@ -1404,7 +1417,7 @@ body{
         max-width: 200px;
     }
     .profile__form{
-        max-width: 280px;
+        max-width: 270px;
     }
     .stats__number{
         font-size: 0.8rem;
@@ -1420,6 +1433,8 @@ body{
     .stats__role{
         display: none;
     }
+
+
 }
 
 

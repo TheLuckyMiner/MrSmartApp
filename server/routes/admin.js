@@ -81,6 +81,18 @@ router.get('/register-error' , async(req,res) => {
         } catch (err){
             console.log(err);
         }
+}); 
+
+router.get('/update-error' , async(req,res) => {
+    try{
+        const locals = {
+            title: "Mister Smart | Ошибка изменения данных",
+            description: "Приложение для изучения английского"
+        };
+        res.render('update-error', {locals, layout: adminLayout });
+        } catch (err){
+            console.log(err);
+        }
 });
 
 router.get('/404' , async(req,res) => {
@@ -153,7 +165,7 @@ router.post('/login', async(req,res) => {
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if(!isPasswordValid){
-            res.status(403).redirect('login-error');
+            res.status(401).redirect('login-error');
         }
 
         const token = jwt.sign({userId: user._id}, jwtSecret);
@@ -206,6 +218,48 @@ router.post('/register', async(req,res) => {
         console.log(err);
     }
 });
+
+router.post('/updateInfo',  async(req,res) => {
+    try{      
+        if(req.body.password !== req.body.password2 || req.body.password.length < 3){
+            res.status(400).redirect('/update-error');
+        }
+
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const userData = {
+            name: req.body.username,
+            email: req.body.email,
+            password: hashedPassword,
+            _id: req.body.id
+        }        
+
+        oldData = await User.find({_id: userData._id});
+
+        if (oldData.password !== hashedPassword){
+            await User.findOneAndUpdate({_id: userData._id}, {$set: {password: hashedPassword}});
+            res.redirect('profile-updated'); 
+        }        
+    } catch(err){
+        console.log(err)
+        res.status(500).redirect('error');
+    }
+});
+
+router.post('/profileExit',  async(req,res) => {
+    try{
+        const locals = {
+            title: "Mister Smart | Профиль",
+            description: "Приложение для изучения английского"
+        }
+
+        res.clearCookie('token');
+        res.redirect('/');
+    } catch(err){
+        console.log(err)
+        res.status(500).redirect('error');
+    }
+});
+
 
 
 router.get('/admin',authMiddleware, async (req,res) => {
@@ -369,6 +423,26 @@ router.post('/add-theme', authMiddleware, async(req,res) => {
     }
     
     res.render('profile', {locals, data})   
+});
+
+router.get('/profile-updated', authMiddleware, async (req,res) => {
+    const locals = {
+        title: "Mister Smart | Профиль",
+        description: "Simple Blog"
+    };
+
+    const token = req.cookies.token;
+    
+    const decoded = jwt.verify(token, jwtSecret);
+    let data1 = decoded.userId;
+
+    try{
+        data = await User.find({_id: data1});
+    } catch(err){
+        res.render('error');
+    }
+    
+    res.render('profile-updated', {locals, data})   
 });
 
 router.get('/stats', authMiddleware, useMiddleware, async (req,res) => {

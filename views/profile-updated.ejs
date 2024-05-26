@@ -25,29 +25,19 @@
                             <label class=profile__label>Повторите пароль:</label>
                             <input type="password" class="profile__input" id="password2" name="password2" value="">
                         </div>
-                        <!-- <div class="profile__item" style="display:none;">
-                            <label class=profile__label>Изменить фотографию профиля:</label>
-                            <input type="file" accept="image/*" class=" profile__input-img" id="profile-img" name="profile-img">
-                        </div> -->
                         <div class="profile__item" style="display:none;">
                             <label class=profile__label>Id:</label>
                             <input type="text" class="profile__input" id="id" name="id" value="<%= data[0]._id %>">
-                        </div>
+                        </div>                        
                         <input type="submit"  class='profile__update-btn' id="profile__change-btn" value="Обновить">
-                        <button type="submit" formaction="/profileExit" formmethod="post" class="profile__exit-btn" id="profile__exit-btn">Выход</button>
-                     
+                        <button type="submit" formaction="/profileExit" formmethod="post" class="profile__exit-btn" id="profile__exit-btn">Выход</button>                     
                     </form>
-                     
                 </div>
             </div>
-            <!-- <button class='profile__update-btn' id="profile__change-btn" >Обновить</button> -->
         </div>
     </div>
 </section> 
 
 <script>
-    // let profile_change = document.querySelector('#profile__change-btn').onclick = () => {
-    // alert("Данные были успешно обновлены!");
-    // }
-    
+     alert("Данные были успешно обновлены!");
 </script>
