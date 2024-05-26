@@ -83,6 +83,18 @@ router.get('/register-error' , async(req,res) => {
         }
 });
 
+router.get('/404' , async(req,res) => {
+    try{
+        const locals = {
+            title: "Mister Smart | Ошибка",
+            description: "Приложение для изучения английского"
+        };
+        res.render('404', {locals, layout: adminLayout });
+        } catch (err){
+            console.log(err);
+        }
+});
+
 /*Проверка MiddleWare */
 const authMiddleware = (req,res, next) =>{
     const token = req.cookies.token;
@@ -221,7 +233,7 @@ router.get('/admin',authMiddleware, async (req,res) => {
     }
 });
 
-router.get('/people', async (req,res) => {
+router.get('/people', authMiddleware, async (req,res) => {
     try{
         const locals = {
             title: "Mister Smart | Администрирование",
@@ -261,7 +273,7 @@ router.get('/add-test',authMiddleware, async (req,res) => {
     }
 });
 
-router.post('/add-test', async(req,res) => {
+router.post('/add-test', authMiddleware, async(req,res) => {
    try{
     const locals = {
         title: "Mister Smart | Администрирование",
@@ -313,7 +325,7 @@ router.get('/add-theme',authMiddleware, async (req,res) => {
     }
 });
 
-router.post('/add-theme', async(req,res) => {
+router.post('/add-theme', authMiddleware, async(req,res) => {
     try{
      const locals = {
          title: "Mister Smart | Администрирование",
@@ -337,7 +349,7 @@ router.post('/add-theme', async(req,res) => {
     }
  });
 
- router.get('/profile', async (req,res) => {
+ router.get('/profile', authMiddleware, async (req,res) => {
     const locals = {
         title: "Mister Smart | Профиль",
         description: "Simple Blog"
@@ -359,7 +371,7 @@ router.post('/add-theme', async(req,res) => {
     res.render('profile', {locals, data})   
 });
 
-router.get('/stats', useMiddleware, async (req,res) => {
+router.get('/stats', authMiddleware, useMiddleware, async (req,res) => {
     const locals = {
         title: "Mister Smart | Профиль",
         description: "Simple Blog"
@@ -374,7 +386,7 @@ router.get('/stats', useMiddleware, async (req,res) => {
 
 
 
-router.get('/theory', async(req,res) => {
+router.get('/theory', authMiddleware, async(req,res) => {
     const locals = {
         title: "Mister Smart | Теория",
         description: "Теоретический материал"
@@ -393,7 +405,7 @@ router.get('/theory', async(req,res) => {
 });
 
 
-router.get('/lesson/:id', async(req,res) => {
+router.get('/lesson/:id', authMiddleware, async(req,res) => {
     try{
         const locals = {
             title: "Mister Smart | Теория",
@@ -410,7 +422,7 @@ router.get('/lesson/:id', async(req,res) => {
 });
 
 
-router.get('/tests', async(req,res) => {
+router.get('/tests', authMiddleware, async(req,res) => {
     const locals = {
         title: "Mister Smart | Тесты",
         description: "Тестовый материал"
@@ -431,7 +443,7 @@ router.get('/tests', async(req,res) => {
 });
 
 
-router.get('/test/:id', async(req,res) => {
+router.get('/test/:id', authMiddleware, async(req,res) => {
     try{
         const locals = {
             title: "Mister Smart | Тест",
@@ -451,6 +463,9 @@ router.get('/test/:id', async(req,res) => {
     }  
 });
 
+router.use((req,res) => {
+    res.status(404).redirect('404');
+});
 
 module.exports = router;
 

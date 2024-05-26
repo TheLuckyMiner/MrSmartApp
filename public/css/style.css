@@ -1153,6 +1153,11 @@ body{
     border: var(--stroke);
 }
 
+.inner404{
+    background-color: #8e43aa;
+    border: 0;
+}
+
 @keyframes shake {
 	10%,
 	90% {
