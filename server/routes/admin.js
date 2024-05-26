@@ -109,11 +109,17 @@ router.get('/404' , async(req,res) => {
 
 /*Проверка MiddleWare */
 const authMiddleware = (req,res, next) =>{
-    const token = req.cookies.token;
-    if(!token){
-        res.status(409).redirect('auth-error');
-    }
+    const locals = {
+        title: "Mister Smart | Ошибка",
+        description: "Приложение для изучения английского"
+    };
+
     try{
+        const token = req.cookies.token;
+        if(!token){
+            res.status(401).redirect('auth-error');
+            return;
+    }    
         const decoded = jwt.verify(token, jwtSecret);
         req.userId = decoded.userId;
         next();
@@ -158,22 +164,27 @@ router.post('/login', async(req,res) => {
             data = [user];
         } catch(err){
             res.status(401).redirect('login-error');
+            return;
         }
         
         if(!user){
             res.status(401).redirect('login-error');
+            return;
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if(!isPasswordValid){
             res.status(401).redirect('login-error');
+            return;
         }
 
         const token = jwt.sign({userId: user._id}, jwtSecret);
         res.cookie('token', token, {httpOnly:true});
         res.status(200).render('index', {locals, userId, data});
+        return;
     } catch (err){
         console.log(err);
         res.status(400).render('error');
+        return;
     }
 });
 
@@ -202,7 +213,7 @@ router.post('/register', async(req,res) => {
             // res.status(201).json({message: 'User created', user});
             // res.render('auth-error');
             data = [userData];
-            res.render('login', {locals, data, layout: adminLayout});
+            res.render('login', {locals, data, layout: adminLayout});            
         } catch(err){
             console.log(err);
             if(err.code === 11000){
@@ -283,10 +294,10 @@ router.get('/admin',authMiddleware, async (req,res) => {
             Users: userCount};
         try{
             data = await User.find({_id: req.userId});
+            res.render('admin', {locals, Infodata, data});  
         } catch(err){
-            data = await User.find({_id: "65fe0bf6604b74d06872ec48"});
-        }
-        res.render('admin', {locals, Infodata, data});   
+            res.redirect('error');
+        }         
     } catch (err){
         console.log(err);
         res.status(409).redirect('auth-error');
