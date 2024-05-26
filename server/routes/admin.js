@@ -221,6 +221,12 @@ router.post('/register', async(req,res) => {
 
 router.post('/updateInfo',  async(req,res) => {
     try{      
+
+        const locals = {
+            title: "Mister Smart | Профиль",
+            description: "Приложение для изучения английского"
+        }
+        
         if(req.body.password !== req.body.password2 || req.body.password.length < 3){
             res.status(400).redirect('/update-error');
         }
@@ -233,15 +239,15 @@ router.post('/updateInfo',  async(req,res) => {
             _id: req.body.id
         }        
 
-        oldData = await User.find({_id: userData._id});
+        data = await User.find({_id: userData._id});
 
-        if (oldData.password !== hashedPassword){
+        if (data.password !== hashedPassword){
             await User.findOneAndUpdate({_id: userData._id}, {$set: {password: hashedPassword}});
-            res.redirect('profile-updated'); 
+            res.render('profile-updated', {locals, data}); 
         }        
     } catch(err){
         console.log(err)
-        res.status(500).redirect('error');
+        res.status(500).render('error');
     }
 });
 
