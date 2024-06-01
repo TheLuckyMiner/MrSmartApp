@@ -30,7 +30,12 @@
 							</label>
 						</li>
 					</ul>	
+					
 					<button class="quiz__submit submit" id="submit">Ответить</button>	
+					<form  action="/testStatsUpdate" method="post" >
+						<input style='display:none;' type="text" id='count' name='count' readonly value="<%= data[0].testComplete %>">
+						<button class="quiz__submit submit btn-disabled" id="finish" type="submit">Завершить тест</button>
+					</form>						
 				</div>
 			</div>
 		</div>

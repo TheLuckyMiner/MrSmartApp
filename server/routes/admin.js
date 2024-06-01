@@ -331,14 +331,13 @@ router.get('/add-test',authMiddleware, async (req,res) => {
             title: "Mister Smart | Администрирование",
             description: "Simple Blog"
         };
-        let data = await Theory.find().count();
-         
-        try{
-            data = await User.find({_id: req.userId});
-        } catch(err){
-            data = await User.find({_id: "65fe0bf6604b74d06872ec48"});
-        } 
-        res.render('add-test', {locals,  data}); 
+        console.log(1110);
+        const token = req.cookies.token;
+        const decoded = jwt.verify(token, jwtSecret);
+        let dataId = decoded.userId;
+        data = await User.find({_id: dataId});
+        console.log(1111);
+        res.render('add-test', {locals, data});   
     } catch (err){
         console.log(err);
     }
@@ -351,7 +350,7 @@ router.post('/add-test', authMiddleware, async(req,res) => {
         description: "Simple Blog"
     };
 
-    const data = {
+    let data1 = {
         title: req.body.title,
         type: req.body.type,
         description: req.body.description,
@@ -359,21 +358,34 @@ router.post('/add-test', authMiddleware, async(req,res) => {
         createdAt: new Date()
     }
 
-    await Tests.create(data);
-    let TestId = await Tests.findOne({title: data.title});
+    await Tests.create(data1);
+    let TestId = await Tests.findOne({title: data1.title});
     let testCode;
-    let startCode = `const questions = ${data.body}`;
-    fs.readFile('./test.js', 'utf-8', (err,data) => {
+    let startCode = `const questions = ${data1.body}`;
+    fs.readFile('./test.js', 'utf-8', (err,data1) => {
         if (err) throw err;
-        testCode = data;
+        testCode = data1;
         fs.writeFile(`./public/questions/${TestId._id}.js`, startCode + testCode, (err) => {
             if (err) throw err;
         });
     });
-
-    res.render('add-test', {locals})
+    
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, jwtSecret);
+    let dataId = decoded.userId;
+        try{
+            let data = await User.findOne({_id: dataId});
+            data = [data];
+            res.render('add-test', {locals, data}); 
+            return 
+        } catch(err){
+            res.redirect('error');
+            return
+        }      
+          
    } catch(err){
     console.log(err);
+    res.redirect('error', 500);
    }
 });
 
@@ -419,6 +431,8 @@ router.post('/add-theme', authMiddleware, async(req,res) => {
      console.log(err);
     }
  });
+
+
 
  router.get('/profile', authMiddleware, async (req,res) => {
     const locals = {
@@ -504,9 +518,13 @@ router.get('/lesson/:id', authMiddleware, async(req,res) => {
         };
 
         let slug = req.params.id;
+        const token = req.cookies.token;
+        const decoded = jwt.verify(token, jwtSecret);
+        let dataId = decoded.userId;
+        let data = await User.find({_id: dataId});
 
         const Theorydata = await Theory.findById({_id: slug});
-        res.render('lesson', {locals, Theorydata, layout: lessonLayout});        
+        res.render('lesson', {locals, Theorydata, layout: lessonLayout, data});        
     } catch (err){
         console.log(err);
     }  
@@ -553,6 +571,55 @@ router.get('/test/:id', authMiddleware, async(req,res) => {
         console.log(err);
     }  
 });
+
+
+
+router.post('/theoryStatsUpdate',  async(req,res) => {
+    try{     
+
+        const locals = {
+            title: "Mister Smart | Теория",
+            description: "Приложение для изучения английского"
+        }
+        
+        const token = req.cookies.token;
+        const decoded = jwt.verify(token, jwtSecret);
+        let dataId = decoded.userId;
+        let data = await User.find({_id: dataId});
+
+        let newStats = Number(req.body.count) + 1;
+        await User.findOneAndUpdate({_id: dataId}, {$set: {lessonComplete: newStats}});
+        const Theorydata = await Theory.find();
+        res.render('theory', {locals, Theorydata, data}); 
+        } catch(err){
+        console.log(err)
+        res.status(500).render('error');
+    }
+});
+
+router.post('/testStatsUpdate',  async(req,res) => {
+    try{     
+
+        const locals = {
+            title: "Mister Smart | Теория",
+            description: "Приложение для изучения английского"
+        }
+        
+        const token = req.cookies.token;
+        const decoded = jwt.verify(token, jwtSecret);
+        let dataId = decoded.userId;
+        let data = await User.find({_id: dataId});
+        let newStats = Number(req.body.count) + 1;
+        await User.findOneAndUpdate({_id: dataId}, {$set: {testComplete: newStats}});
+        const Testdata = await Tests.find();
+        res.render('tests', {locals,Testdata, data});
+        } catch(err){
+        console.log(err)
+        res.status(500).render('error');
+    }
+});
+
+
 
 router.use((req,res) => {
     res.status(404).redirect('404');

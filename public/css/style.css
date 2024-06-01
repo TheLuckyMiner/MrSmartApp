@@ -412,6 +412,7 @@ body{
 
 .class__return-btn-inner{
     margin-top: 2vh;
+    margin-bottom: 7vh;
 }
 
 /*Уровни сложности easy-normal-hard*/
@@ -1165,6 +1166,10 @@ body{
     max-width: 500px;
     width:50%;
     border: var(--stroke);
+}
+
+.btn-disabled{
+    display:none;
 }
 
 .inner404{

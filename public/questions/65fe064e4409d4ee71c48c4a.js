@@ -91,7 +91,13 @@ function showResults(){
 	headerContainer.innerHTML = finalMessage;
 
 	submitBtn.blur();
-	submitBtn.innerText = 'Вернуться на главную страницу';
-	submitBtn.onclick = () => window.location='/tests';
+	if(score * 100 / questions.length > 50){
+		submitBtn.classList.toggle('btn-disabled');
+		const finishBtn = document.querySelector('#finish');
+		finishBtn.classList.toggle('btn-disabled');
+	} else{
+		submitBtn.innerText = 'Вернуться на главную страницу';
+		submitBtn.onclick = () => window.location='/tests';
+	}
 
 }
