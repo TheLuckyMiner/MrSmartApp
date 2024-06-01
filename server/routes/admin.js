@@ -305,7 +305,7 @@ router.get('/admin',authMiddleware, accessMiddleware, async (req,res) => {
     try{
         const locals = {
             title: "Mister Smart | Администрирование",
-            description: "Simple Blog"
+            description: "Приложение для изучения английского"
         };
         const theoryCount = await Theory.find().count();
         const testCount = await Tests.find().count();
@@ -330,7 +330,7 @@ router.get('/people', authMiddleware, accessMiddleware, async (req,res) => {
     try{
         const locals = {
             title: "Mister Smart | Администрирование",
-            description: "Simple Blog"
+            description: "Приложение для изучения английского"
         };
         const people = await User.find();
         let data;
@@ -339,19 +339,69 @@ router.get('/people', authMiddleware, accessMiddleware, async (req,res) => {
         } catch(err){
             data = await User.find({_id: "65fe0bf6604b74d06872ec48"});
         }
-        res.render('people', {locals,  people});   
+        res.render('people', {locals,  people, data});   
     } catch (err){
         console.log(err);
         res.redirect('error');
     }
 });
 
+router.get('/person/:id',  authMiddleware, accessMiddleware,  async(req,res) => {
+    try{
+        const locals = {
+            title: "Mister Smart | Администрирование",
+            description: "Приложение для изучения английского"
+        };
+        let slug = req.params.id;
+        const token = req.cookies.token;
+        const decoded = jwt.verify(token, jwtSecret);
+        let dataId = decoded.userId;
+        let data = await User.find({_id: dataId});
+        const userData = await User.findById({_id: slug});
+        res.render('person', {locals, userData, data});        
+    } catch (err){
+        console.log(err);
+        res.status(400).redirect('error');
+    }
+});
+
+router.post('/becomeAdmin', authMiddleware, accessMiddleware,  async(req,res) => {
+    try{      
+
+        const locals = {
+            title: "Mister Smart | Профиль",
+            description: "Приложение для изучения английского"
+        }
+        
+        const userId = req.body.id;
+        let userData = await User.find({_id: userId});
+
+        const token = req.cookies.token;
+        const decoded = jwt.verify(token, jwtSecret);
+        let dataId = decoded.userId;
+        data = await User.find({_id: dataId});
+        const people = await User.find();
+
+        if (userData[0].role == 'Admin'){
+            await User.findOneAndUpdate({_id: userId}, {$set: {role: "Student"}});            
+        } else if (userData[0].role == 'Student'){
+            await User.findOneAndUpdate({_id: userId}, {$set: {role: "Admin"}});
+        }   
+        res.render('people-updated', {locals, data, people});  
+    } catch(err){
+        console.log(err)
+        res.status(500).render('error');
+    }
+});
+
+
+
 /*Добавление теста*/
 router.get('/add-test',authMiddleware, accessMiddleware, async (req,res) => {
     try{
         const locals = {
             title: "Mister Smart | Администрирование",
-            description: "Simple Blog"
+            description: "Приложение для изучения английского"
         };
         const token = req.cookies.token;
         const decoded = jwt.verify(token, jwtSecret);
@@ -367,7 +417,7 @@ router.post('/add-test', authMiddleware, async(req,res) => {
    try{
     const locals = {
         title: "Mister Smart | Администрирование",
-        description: "Simple Blog"
+        description: "Приложение для изучения английского"
     };
 
     let data1 = {
@@ -414,7 +464,7 @@ router.get('/add-theme',authMiddleware, accessMiddleware, async (req,res) => {
     try{
         const locals = {
             title: "Mister Smart | Администрирование",
-            description: "Simple Blog"
+            description: "Приложение для изучения английского"
         };
         let data = await Theory.find().count();
         try{
@@ -432,7 +482,7 @@ router.post('/add-theme', authMiddleware, async(req,res) => {
     try{
      const locals = {
          title: "Mister Smart | Администрирование",
-         description: "Simple Blog"
+         description: "Приложение для изучения английского"
      };
      const data = {
          title: req.body.title,
@@ -455,7 +505,7 @@ router.post('/add-theme', authMiddleware, async(req,res) => {
  router.get('/profile', authMiddleware, async (req,res) => {
     const locals = {
         title: "Mister Smart | Профиль",
-        description: "Simple Blog"
+        description: "Приложение для изучения английского"
     };
 
     const token = req.cookies.token;
@@ -477,7 +527,7 @@ router.post('/add-theme', authMiddleware, async(req,res) => {
 router.get('/profile-updated', authMiddleware, async (req,res) => {
     const locals = {
         title: "Mister Smart | Профиль",
-        description: "Simple Blog"
+        description: "Приложение для изучения английского"
     };
 
     const token = req.cookies.token;
@@ -497,7 +547,7 @@ router.get('/profile-updated', authMiddleware, async (req,res) => {
 router.get('/stats', authMiddleware, async (req,res) => {
     const locals = {
         title: "Mister Smart | Профиль",
-        description: "Simple Blog"
+        description: "Приложение для изучения английского"
     };
     try{
         data = await User.find({_id: req.userId});

@@ -1,0 +1,51 @@
+<section class="main">
+    <div class="container">
+        <h1 class="main__title">
+            Список пользователей
+        </h1>
+        <div class="main__line"></div>
+        
+        <div class="people__card">
+            <div class="people__header">
+                <div class="status__main">
+                <div class="people__img-inner"><img src="/images/profile.svg" alt="+" class="people__img"></div>
+                <p class="stats__title"><%= userData.name %></p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="person__card">
+            <div class="stats__header">
+                <div class="stats__logo-inner">
+                    <img src="/images/chart.svg" alt="->" class="stats__logo">
+                </div>
+                <p class="stats__title">Статистика</p>
+            </div>
+            <div class="stats__main">
+                <div class="stats__item">
+                    <div class="stats__img-inner"><img src="/images/stats.svg" alt="" class="stats__img"></div>
+                    <p class="stats__number"><%= userData.role %></p>
+                    <p class="stats__sign">Роль</p>
+                </div>
+                <div class="stats__item">
+                    <div class="stats__img-inner"><img src="/images/stats2.svg" alt="" class="stats__img"></div>
+                    <p class="stats__number"><%= userData.lessonComplete %></p>
+                    <p class="stats__sign">Уроков</p>
+                </div>
+                <div class="stats__item">
+                    <div class="stats__img-inner"><img src="/images/stats3.svg" alt="" class="stats__img"></div>
+                    <p class="stats__number"><%= userData.testComplete%></p>
+                    <p class="stats__sign">Тестов</p>
+                </div>
+            </div>
+        </div>
+        
+        <form action="/becomeAdmin" method="post" class="person__form">
+            <input style="display:none" type="text" id="id" name="id" value="<%= userData._id %>">
+            <button type="submit" formaction="/becomeAdmin" formmethod="post" class="class__return-btn person__form-btn">Изменить роль</button>
+        </form>
+        <a href="/admin" class="class__return-btn">Назад</a>
+                     
+                   
+    </div>
+</section> 

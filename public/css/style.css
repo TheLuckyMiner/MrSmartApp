@@ -796,6 +796,19 @@ body{
     transition: 0.4s linear;
 }
 
+.stats__card:nth-child(6){
+    margin-bottom:12vh;
+}
+
+.person__card{
+    background-color: var(--white);
+    max-width: 700px;
+    box-shadow: 0 0 2px 2px var(--dark-bg);
+    transition: 0.4s linear;
+
+    margin-bottom: 5vh;
+}
+
 .stats__header{
     display: flex;
     align-items:center;
@@ -1085,6 +1098,14 @@ body{
     background-color: var(--purple);
 }
 
+.person__form-btn{
+    background-color: var(--red);
+    margin-bottom: 5vh;
+}
+
+.person__form-btn:hover{
+    background-color: var(--light-red);
+}
 /*Форма добавления теста и теории*/
 
 .add-container{
