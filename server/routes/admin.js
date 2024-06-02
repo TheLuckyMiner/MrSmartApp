@@ -332,7 +332,7 @@ router.get('/people', authMiddleware, accessMiddleware, async (req,res) => {
             title: "Mister Smart | Администрирование",
             description: "Приложение для изучения английского"
         };
-        const people = await User.find();
+        const people = await User.find().sort({name:1});
         let data;
         try{
             data = await User.find({_id: req.userId});
@@ -380,7 +380,7 @@ router.post('/becomeAdmin', authMiddleware, accessMiddleware,  async(req,res) =>
         const decoded = jwt.verify(token, jwtSecret);
         let dataId = decoded.userId;
         data = await User.find({_id: dataId});
-        const people = await User.find();
+        const people = await User.find().sort({name:1});
 
         if (userData[0].role == 'Admin'){
             await User.findOneAndUpdate({_id: userId}, {$set: {role: "Student"}});            
