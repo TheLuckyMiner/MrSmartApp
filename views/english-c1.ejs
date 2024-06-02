@@ -1,0 +1,45 @@
+<section class="main">
+    <div class="container">
+        <div class="main__inner">
+            <h1 class="main__title">
+                Тест
+            </h1>
+            <div class="main__line"></div>
+			<div class="quiz__inner">
+				<div class="quiz" id="quiz">
+					<div class="quiz-header" id="header">
+						<!-- Заголовок вопроса -->
+						<h2 class="quiz__title">Загружаем вопрос...</h2>
+			
+						<!-- Результаты викторины -->
+						<h2 class="quiz__title">%title%</h2>
+						<h3 class="quiz__summary">%message%</h3>
+						<p class="quiz__result">%result%</p>
+					</div>			
+					<ul class="quiz__list" id="list">
+						<li>
+							<label>
+								<input type="radio" class="answer" name="answer" />
+								<span>Ответ...</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<input type="radio" class="answer" name="answer" />
+								<span>Ответ...</span>
+							</label>
+						</li>
+					</ul>	
+					
+					<button class="quiz__submit submit" id="submit">Ответить</button>	
+					<form  action="/englishStatsUpdate" method="post" >
+						<input style='display:none;' type="text" id='level' name='level' readonly value="Advanced">
+						<button class="quiz__submit submit btn-disabled" id="finish" type="submit">Завершить тест</button>
+					</form>						
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script src="../questions/english-c1.js"></script>

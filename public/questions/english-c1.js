@@ -1,6 +1,6 @@
 const questions = [
 	{
-		question: "Сколько букв в английском алфавите?",
+		question: "English c1?",
 		answers: ["33", "26", "32", "21"],
 		correct: 2,
 	},
@@ -99,10 +99,10 @@ function showResults(){
 	let title, message;
 	if(score === questions.length){
 		title = 'Поздравляем!';
-		message = 'Вы ответили верно на все вопросы!';
-	} else if(score * 100 / questions.length > 50){
+		message = 'Вы прошли уровень Advanced на 100%';
+	} else if(score * 100 / questions.length >= 60){
 		title = 'Неплохой результат';
-		message = 'Больше половины правильных ответов';
+		message = 'Вы прошли уровень Advanced';
 	} else{
 		title = 'Попробуйте еще раз';
 		message = 'Меньше половины правильных ответов';
@@ -118,13 +118,13 @@ function showResults(){
 
 	submitBtn.blur();
 	
-	if(score * 100 / questions.length > 50){
+	if(score * 100 / questions.length >= 60){
 		submitBtn.classList.toggle('btn-disabled');
 		const finishBtn = document.querySelector('#finish');
 		finishBtn.classList.toggle('btn-disabled');
 	} else{
-		submitBtn.innerText = 'Вернуться на главную страницу';
-		submitBtn.onclick = () => window.location='/tests';
+		submitBtn.innerText = 'Вернуться назад';
+		submitBtn.onclick = () => window.location='/english-level';
 	}
 
 

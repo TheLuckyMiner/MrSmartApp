@@ -217,7 +217,11 @@ router.post('/register', async(req,res) => {
             title: "Mister Smart | Вход",
             description: "Приложение для изучения английского"
         }
-        
+        if (req.body.password !== req.body.password2){
+            res.status(500).redirect('update-error');
+            return;
+        }
+
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
         const userData = {
@@ -358,7 +362,7 @@ router.get('/person/:id',  authMiddleware, accessMiddleware,  async(req,res) => 
         let dataId = decoded.userId;
         let data = await User.find({_id: dataId});
         const userData = await User.findById({_id: slug});
-        res.render('person', {locals, userData, data});        
+        res.render('person', {locals, userData,  layout: lessonLayout, data});        
     } catch (err){
         console.log(err);
         res.status(400).redirect('error');
@@ -546,7 +550,7 @@ router.get('/profile-updated', authMiddleware, async (req,res) => {
 
 router.get('/stats', authMiddleware, async (req,res) => {
     const locals = {
-        title: "Mister Smart | Профиль",
+        title: "Mister Smart | Статистика",
         description: "Приложение для изучения английского"
     };
     try{
@@ -557,8 +561,127 @@ router.get('/stats', authMiddleware, async (req,res) => {
     res.render('stats', {locals, data})   
 });
 
+/*Тесты на уровень знания английского */
+router.get('/english-level', authMiddleware, async (req,res) => {
+    const locals = {
+        title: "Mister Smart | Тесты",
+        description: "Приложение для изучения английского"
+    };
+    try{
+        data = await User.find({_id: req.userId});
+    } catch(err){
+        data = await User.find({_id: "65fe0bf6604b74d06872ec48"});
+    }
+    res.render('english-level', {locals, data})   
+});
 
+router.get('/english-a1', authMiddleware, async (req,res) => {
+    const locals = {
+        title: "Mister Smart | Тест",
+        description: "Приложение для изучения английского"
+    };
+    try{
+        data = await User.find({_id: req.userId});
+    } catch(err){
+        res.status(500).render('error');
+        return;
+    }
+    res.render('english-a1', {locals, data})   
+});
 
+router.get('/english-a2', authMiddleware, async (req,res) => {
+    const locals = {
+        title: "Mister Smart | Тест",
+        description: "Приложение для изучения английского"
+    };
+    try{
+        data = await User.find({_id: req.userId});
+    } catch(err){
+        res.status(500).render('error');
+        return;
+    }
+    res.render('english-a2', {locals, data})   
+});
+
+router.get('/english-b1', authMiddleware, async (req,res) => {
+    const locals = {
+        title: "Mister Smart | Тест",
+        description: "Приложение для изучения английского"
+    };
+    try{
+        data = await User.find({_id: req.userId});
+    } catch(err){
+        res.status(500).render('error');
+        return;
+    }
+    res.render('english-b1', {locals, data})   
+});
+
+router.get('/english-b2', authMiddleware, async (req,res) => {
+    const locals = {
+        title: "Mister Smart | Тест",
+        description: "Приложение для изучения английского"
+    };
+    try{
+        data = await User.find({_id: req.userId});
+    } catch(err){
+        res.status(500).render('error');
+        return;
+    }
+    res.render('english-b2', {locals, data})   
+});
+
+router.get('/english-c1', authMiddleware, async (req,res) => {
+    const locals = {
+        title: "Mister Smart | Тест",
+        description: "Приложение для изучения английского"
+    };
+    try{
+        data = await User.find({_id: req.userId});
+    } catch(err){
+        res.status(500).render('error');
+        return;
+    }
+    res.render('english-c1', {locals, data})   
+});
+
+router.get('/english-c2', authMiddleware, async (req,res) => {
+    const locals = {
+        title: "Mister Smart | Тест",
+        description: "Приложение для изучения английского"
+    };
+    try{
+        data = await User.find({_id: req.userId});
+    } catch(err){
+        res.status(500).render('error');
+        return;
+    }
+    res.render('english-c2', {locals, data})   
+});
+
+router.post('/englishStatsUpdate',  async(req,res) => {
+    try{     
+
+        const locals = {
+            title: "Mister Smart | Теория",
+            description: "Приложение для изучения английского"
+        }
+        
+        const token = req.cookies.token;
+        const decoded = jwt.verify(token, jwtSecret);
+        let dataId = decoded.userId;
+        let data = await User.find({_id: dataId});
+
+        let newStats = String(req.body.level);
+        await User.findOneAndUpdate({_id: dataId}, {$set: {level: newStats}});
+        res.render('english-level', {locals, data}); 
+        } catch(err){
+        console.log(err)
+        res.status(500).render('error');
+    }
+});
+
+/*Теоретический раздел */
 router.get('/theory', authMiddleware, async(req,res) => {
     const locals = {
         title: "Mister Smart | Теория",

@@ -5,15 +5,50 @@
                 Статистика
             </h1>
             <div class="main__line"></div>
-            <div class="stats__inner">
-                <img src="images/main/stats.webp" alt="" class="stats__img">
-                <div class="stats__info">
-                    <p class="stats__title"><%= data[0].name%></p>
-                    <p class="stats__text"><span class="bold">Количество пройденных уроков: </span><%= data[0].lessonComplete%></p>
-                    <p class="stats__text"><span class="bold">Количество пройденных тестов: </span><%= data[0].testComplete%></p>
-                    <p class="stats__text"><span class="bold">Уровень обучения: </span><%= data[0].level %></p>
-                </div>           
-            </div>                
+            <div class="stats__cards">
+                <div class="stats__card">
+                    <div class="stats__header">
+                        <div class="stats__logo-inner">
+                            <img src="images/chart.svg" alt="->" class="stats__logo">
+                        </div>
+                        <p class="stats__title">Статистика обучения</p>
+                    </div>
+                    <div class="stats__main">
+                        <div class="stats__item">
+                            <div class="stats__img-inner"><img src="images/stats.svg" alt="" class="stats__img"></div>
+                            <p class="stats__number"><%= data[0].role %></p>
+                            <p class="stats__sign">Роль</p>
+                        </div>
+                        <div class="stats__item">
+                            <div class="stats__img-inner"><img src="images/stats2.svg" alt="" class="stats__img"></div>
+                            <p class="stats__number"><%= data[0].lessonComplete %></p>
+                            <p class="stats__sign">Уроков</p>
+                        </div>
+                        <div class="stats__item">
+                            <div class="stats__img-inner"><img src="images/stats3.svg" alt="" class="stats__img"></div>
+                            <p class="stats__number"><%= data[0].testComplete %></p>
+                            <p class="stats__sign">Тестов</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats__card last">
+                    <div class="stats__header">
+                        <div class="stats__logo-inner-purple">
+                            <img src="images/stats4.svg" alt="->" class="stats__logo" style="width:80%;">
+                        </div>
+                        <p class="stats__title">Уровень знания языка</p>
+                    </div>
+                    <div class="stats__main">
+                        <div class="stats__item">
+                            <div class="stats__img-inner-purple"><img src="images/stats5.svg" alt="" class="stats__img"></div>
+                            <p class="stats__number"><%= data[0].level %></p>
+                            <p class="stats__sign">Уровень</p>
+                        </div>
+                    </div>
+                </div>    
+                <a href="/english-level" class="class__return-btn class__return-btn-block">Пройти тест на знание английского</a>         
+            
+            </div>
         </div>
     </div>
 </section> 

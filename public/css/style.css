@@ -789,15 +789,24 @@ body{
 }
 
 /*Панель администратора*/
-.stats__card{
-    background-color: var(--white);
-    max-width: 500px;
-    box-shadow: 0 0 2px 2px var(--dark-bg);
-    transition: 0.4s linear;
+.stats__cards{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
 }
 
-.stats__card:nth-child(6){
-    margin-bottom:12vh;
+.stats__card{
+    background-color: var(--white);
+    width:500px;
+    box-shadow: 0 0 2px 2px var(--dark-bg);
+    transition: 0.4s linear;
+    margin-bottom: 2vh;
+}
+
+.stats__card:nth-child(6),
+.last{
+    margin-bottom:5vh;
 }
 
 .person__card{
@@ -817,7 +826,9 @@ body{
 }
 
 .stats__logo-inner,
-.stats__img-inner{
+.stats__img-inner,
+.stats__img-inner-purple,
+.stats__logo-inner-purple{
     border: 1px solid var(--red);
     border-radius: 40px;
     height:40px;
@@ -827,6 +838,11 @@ body{
     display: flex;
     justify-content: center;
 
+}
+
+.stats__img-inner-purple,
+.stats__logo-inner-purple{
+    border: 1px solid var(--light-purple);
 }
 
 .stats__title{
@@ -846,7 +862,8 @@ body{
     margin-bottom: 2vh;
 }
 
-.stats__img-inner{
+.stats__img-inner,
+.stats__img-inner-purple{
     margin: 0 auto 1vh;
     width: 45px;
     height: 45px;
@@ -1372,12 +1389,20 @@ body{
     .profile__form{
         max-width: 350px;
     }
+    .stats__card{
+        width: 95%;
+    }
     .stats__title{
         font-size: 0.8rem;
     }
     .stats__text{
         /* margin-top: 1vh; */
         font-size: 0.8rem;
+    }
+    .class__return-btn-block{
+        display:block;
+        text-align: center;
+        margin-bottom: 7vh;
     }
     .form-title p{
         margin: 5px;
@@ -1418,6 +1443,9 @@ body{
    .agree__inner{
     font-size: 0.8rem;
    }
+   /* .stats__card{
+    width: 350px;
+    } */
     
 }
 
@@ -1452,13 +1480,18 @@ body{
         font-size: 0.7rem;
     }
     .stats__img-inner,
-    .stats__logo-inner{
+    .stats__logo-inne,
+    .stats__img-inner-purple,
+    .stats__logo-inner-purpler{
         width: 35px;
         height: 35px;
     }  
     .stats__role{
         display: none;
     }
+    /* .stats__card{
+        width: 280px;
+        } */
 
 
 }
