@@ -1,29 +1,29 @@
 const questions = [
 	{
-		question: "English b2?",
-		answers: ["33", "26", "32", "21"],
-		correct: 2,
-	},
-	{
-		question: "Сколько гласных в английском алфавите?",
-		answers: ["8", "5", "6", "10"],
+		question: "How long (...) your dog?",
+		answers: ["did you had", "had you", "have you had", "have you"],
 		correct: 3,
 	},
 	{
-		question: "К гласным буквам не относится...",
-		answers: ["A", "J", "O", "U"],
-		correct: 2,
-	},
-	{
-		question: "Какая буква стоит в алфавите между P и R",
-		answers: ["L", "C", "V", "Q"],
-		correct: 4,
-	},
-	{
-		question: "Какая буква является и словом, и буквой?",
-		answers: ["I", "W", "F", "Y"],
+		question: "My parents don’t let me (...) out during the week.",
+		answers: ["go", "to go", "going", "to going"],
 		correct: 1,
 	},
+	{
+		question: "Ralph and Liz Miller (...) Russian for 10 years already.",
+		answers: ["have been studying", "were studying", "are studying", "study"],
+		correct: 1,
+	},
+	{
+		question: "I (...) vegetables when I was a child.",
+		answers: ["used not like", "did not liked", "did not use to like", "not used like"],
+		correct: 3,
+	},
+	{
+		question: "My mum doesn’t like (...) to work.",
+		answers: ["drive", "to driving", "driving", "---"],
+		correct: 3,
+	}
 ];
 
 const headerContainer = document.querySelector('#header');

@@ -1,28 +1,128 @@
 const questions = [
 	{
-		question: "English a2?",
-		answers: ["33", "26", "32", "21"],
-		correct: 2,
-	},
-	{
-		question: "Сколько гласных в английском алфавите?",
-		answers: ["8", "5", "6", "10"],
-		correct: 3,
-	},
-	{
-		question: "К гласным буквам не относится...",
-		answers: ["A", "J", "O", "U"],
-		correct: 2,
-	},
-	{
-		question: "Какая буква стоит в алфавите между P и R",
-		answers: ["L", "C", "V", "Q"],
+		question: "This is (...) interesting book. Have you read it?",
+		answers: ["the", "-", "a", "an"],
 		correct: 4,
 	},
 	{
-		question: "Какая буква является и словом, и буквой?",
-		answers: ["I", "W", "F", "Y"],
+		question: "(...) are you doing tonight?",
+		answers: ["Who", "What", "where", "Why"],
+		correct: 2,
+	},
+	{
+		question: "My sister’s friend is (...) trained teacher.",
+		answers: ["the", "–", "a", "an"],
+		correct: 3,
+	},
+	{
+		question: "This is the university (...) I studied economics.",
+		answers: ["when", "where", "who", "why"],
+		correct: 2,
+	},
+	{
+		question: "I am thirsty. I just need (...) water.",
+		answers: ["some", "any", "a few", "many"],
 		correct: 1,
+	},
+	{
+		question: "He has (...) money. He can’t spend it!",
+		answers: ["too many", "enough", "too much", "too"],
+		correct: 3,
+	},
+	{
+		question: "Jane has (...) breakfast at six a.m.",
+		answers: ["a", "the", "any", "-"],
+		correct: 4,
+	},
+	{
+		question: "How often (...) to the cinema?",
+		answers: ["go you", "do you go", "you do go", "you go"],
+		correct: 2,
+	},
+	{
+		question: "I travelled to (...) London by train yesterday.",
+		answers: ["the", "-", "a", "an"],
+		correct: 2,
+	},
+	{
+		question: "I (...) at the moment because I am on holiday.",
+		answers: ["‘m not studying", "don’t study", "not study", "not studying"],
+		correct: 1,
+	},
+	{
+		question: "He walked (...) the café and ordered a coffee.",
+		answers: ["out", "out of", "into", "in"],
+		correct: 3,
+	},
+	{
+		question: "Let’s go (...) home on foot.",
+		answers: ["to", "at", "the", "-"],
+		correct: 4,
+	},
+	{
+		question: "He (...) to help his colleague with his work but it was too complicated.",
+		answers: ["tryed", "tried", "tries", "tryes"],
+		correct: 2,
+	},
+	{
+		question: "She would like (...) to Romania on a business trip because her friend lives there.",
+		answers: ["going", "come", "to go", "is going"],
+		correct: 3,
+	},
+	{
+		question: "You (...) swim there. It’s forbidden.",
+		answers: ["don’t have to", "shouldn’t", "couldn’t", "mustn’t"],
+		correct: 4,
+	},
+	{
+		question: "How long (...) your dog?",
+		answers: ["did you had", "had you", "have you had", "have you"],
+		correct: 3,
+	},
+	{
+		question: "My parents don’t let me (...) out during the week.",
+		answers: ["go", "to go", "going", "to going"],
+		correct: 1,
+	},
+	{
+		question: "Ralph and Liz Miller (...) Russian for 10 years already.",
+		answers: ["have been studying", "were studying", "are studying", "study"],
+		correct: 1,
+	},
+	{
+		question: "I (...) vegetables when I was a child.",
+		answers: ["used not like", "did not liked", "did not use to like", "not used like"],
+		correct: 3,
+	},
+	{
+		question: "My mum doesn’t like (...) to work.",
+		answers: ["drive", "to driving", "driving", "---"],
+		correct: 3,
+	},
+	{
+		question: "This is (...) meal I have ever had.",
+		answers: ["a big", "a biggest", "the bigest", "the biggest"],
+		correct: 4,
+	},
+	{
+		question: "Linda (...) me she had finished her homework.",
+		answers: ["replied", "said", "shouted", "told"],
+		correct: 4,
+	},
+	{
+		question: "I think you (...) lose some weight. You’ll feel much better.",
+		answers: ["can", "should", "must to", "had to"],
+		correct: 2,
+	},
+	{
+		question: "What (...) when you opened the door?",
+		answers: ["you see", "you saw", "did you see", "were you seeing"],
+		correct: 3,
+	},
+	{
+		question: "If she (...) home late, her mother will be angry.",
+		answers: ["will get", "get", "gets", "got"],
+		correct: 3,
 	},
 ];
 

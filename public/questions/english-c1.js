@@ -1,29 +1,29 @@
 const questions = [
 	{
-		question: "English c1?",
-		answers: ["33", "26", "32", "21"],
-		correct: 2,
-	},
-	{
-		question: "Сколько гласных в английском алфавите?",
-		answers: ["8", "5", "6", "10"],
+		question: "He walked (...) the café and ordered a coffee.",
+		answers: ["out", "out of", "into", "in"],
 		correct: 3,
 	},
 	{
-		question: "К гласным буквам не относится...",
-		answers: ["A", "J", "O", "U"],
-		correct: 2,
-	},
-	{
-		question: "Какая буква стоит в алфавите между P и R",
-		answers: ["L", "C", "V", "Q"],
+		question: "Let’s go (...) home on foot.",
+		answers: ["to", "at", "the", "-"],
 		correct: 4,
 	},
 	{
-		question: "Какая буква является и словом, и буквой?",
-		answers: ["I", "W", "F", "Y"],
-		correct: 1,
+		question: "He (...) to help his colleague with his work but it was too complicated.",
+		answers: ["tryed", "tried", "tries", "tryes"],
+		correct: 2,
 	},
+	{
+		question: "She would like (...) to Romania on a business trip because her friend lives there.",
+		answers: ["going", "come", "to go", "is going"],
+		correct: 3,
+	},
+	{
+		question: "You (...) swim there. It’s forbidden.",
+		answers: ["don’t have to", "shouldn’t", "couldn’t", "mustn’t"],
+		correct: 4,
+	}
 ];
 
 const headerContainer = document.querySelector('#header');
