@@ -200,7 +200,7 @@ function showResults(){
 	if(score === questions.length){
 		title = 'Поздравляем!';
 		message = 'Вы прошли уровень Elementary на 100%';
-	} else if(score * 100 / questions.length >= 60){
+	} else if(score * 100 / questions.length >= 30){
 		title = 'Неплохой результат';
 		message = 'Вы прошли уровень Elementary';
 	} else{
@@ -218,7 +218,7 @@ function showResults(){
 
 	submitBtn.blur();
 	
-	if(score * 100 / questions.length >= 60){
+	if(score * 100 / questions.length >= 30){
 		submitBtn.classList.toggle('btn-disabled');
 		const finishBtn = document.querySelector('#finish');
 		finishBtn.classList.toggle('btn-disabled');

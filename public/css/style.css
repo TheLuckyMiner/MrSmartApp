@@ -200,7 +200,8 @@ body{
     transition: 0.3s linear;
 }
 
-.profile-view__btn:hover{
+.profile-view__btn:hover,
+.profile-view__Btn:focus{
     background-color: var(--purple);
 }
 
@@ -211,7 +212,8 @@ body{
     transition: 0.2s linear;
 }
 
-.side-bar__item:hover{
+.side-bar__item:hover,
+.side-bar__item:focus{
     background-color: var(--light-bg);
 }
 
@@ -239,7 +241,8 @@ body{
     transition: 0.2s linear;
 }
 
-.side-bar__name:hover{
+.side-bar__name:hover,
+.side-bar__name:focus{
     left: 5rem;
 }
 
@@ -944,8 +947,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 80vh;
-    
+	height: 75vh;
 }
 
 .quiz {
@@ -1256,6 +1258,12 @@ body{
     }
     .profile-view__btn{
         display:none;
+    }
+    .quiz__inner{
+        margin-bottom: 35px;
+    }
+    .main{
+        margin-bottom: 55px;
     }
 }
 
