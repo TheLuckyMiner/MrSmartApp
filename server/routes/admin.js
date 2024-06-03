@@ -20,6 +20,8 @@ router.get('/login', async(req,res) => {
         res.render('login', {locals, layout: adminLayout })
     } catch (err){
         console.log(err);
+        res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -29,9 +31,12 @@ router.get('/agree', async(req,res) => {
         title: "Mister Smart | Пользовательское соглашение",
         description: "Приложение для изучения английского"
     };
-    res.render('agree', {locals, layout: adminLayout }) 
+    res.render('agree', {locals, layout: adminLayout}) ;
+    return;
     } catch (err){
         console.log(err);
+        res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -121,11 +126,6 @@ router.get('/404' , async(req,res) => {
 
 /*Проверка MiddleWare */
 const authMiddleware = (req,res, next) =>{
-    const locals = {
-        title: "Mister Smart | Ошибка",
-        description: "Приложение для изучения английского"
-    };
-
     try{
         const token = req.cookies.token;
         if(!token){
@@ -136,18 +136,12 @@ const authMiddleware = (req,res, next) =>{
         req.userId = decoded.userId;
         next();
     } catch(err){
-        // res.status(401).json({message: "Нет доступа"});
         res.status(409).redirect('error');
     }
 }
 
 /*Проверка MiddleWare */
-const accessMiddleware = async (req,res, next) =>{
-    const token = req.cookies.token;
-    const locals = {
-        title: "Mister Smart",
-        description: "Приложение для изучения английского"
-    };
+const accessMiddleware = async (req,res, next) =>{    
     try{
         const token = req.cookies.token;
         if(!token){
@@ -163,11 +157,10 @@ const accessMiddleware = async (req,res, next) =>{
         } else{
             res.status(403).redirect('access-error');
             return;
-        }
-        
+        }        
     } catch(err){
-        // res.status(401).json({message: "Нет доступа"});
         res.status(409).redirect('error');
+        return;
     }
 }
 
@@ -187,8 +180,7 @@ router.post('/login', async(req,res) => {
         } catch(err){
             res.status(401).redirect('login-error');
             return;
-        }
-        
+        }        
         if(!user){
             res.status(401).redirect('login-error');
             return;
@@ -198,14 +190,13 @@ router.post('/login', async(req,res) => {
             res.status(401).redirect('login-error');
             return;
         }
-
         const token = jwt.sign({userId: user._id}, jwtSecret);
         res.cookie('token', token, {httpOnly:true});
         res.status(200).render('index', {locals, userId, data});
         return;
     } catch (err){
         console.log(err);
-        res.status(400).render('error');
+        res.status(400).redirect('error');
         return;
     }
 });
@@ -221,9 +212,7 @@ router.post('/register', async(req,res) => {
             res.status(500).redirect('update-error');
             return;
         }
-
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
         const userData = {
             name: req.body.name,
             email: req.body.email,
@@ -232,27 +221,25 @@ router.post('/register', async(req,res) => {
             testComplete:0, 
             lessonComplete:0, 
             role:"Student"
-        }        
-        
+        } 
         try {
             const user = await User.create(userData);
-            // res.status(201).json({message: 'User created', user});
-            // res.render('auth-error');
             data = [userData];
-            res.render('login', {locals, data, layout: adminLayout});            
+            res.render('login', {locals, data, layout: adminLayout});   
+            return;         
         } catch(err){
-            console.log(err);
             if(err.code === 11000){
                 res.status(409).redirect('register-error');
+                return;
             } else{
                 res.status(500).redirect('error');
+                return;
             }
-
         }
-            
-        // res.render('login', {locals, layout: adminLayout })
     } catch (err){
-        console.log(err);
+        console.log(err)
+        res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -262,29 +249,27 @@ router.post('/updateInfo',  async(req,res) => {
         const locals = {
             title: "Mister Smart | Профиль",
             description: "Приложение для изучения английского"
-        }
-        
+        }        
         if(req.body.password !== req.body.password2 || req.body.password.length < 3){
             res.status(400).redirect('/update-error');
         }
-
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const userData = {
             name: req.body.username,
             email: req.body.email,
             password: hashedPassword,
             _id: req.body.id
-        }        
-
+        }
         data = await User.find({_id: userData._id});
-
         if (data.password !== hashedPassword){
             await User.findOneAndUpdate({_id: userData._id}, {$set: {password: hashedPassword}});
             res.render('profile-updated', {locals, data}); 
+            return;
         }        
     } catch(err){
         console.log(err)
-        res.status(500).render('error');
+        res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -294,12 +279,12 @@ router.post('/profileExit',  async(req,res) => {
             title: "Mister Smart | Профиль",
             description: "Приложение для изучения английского"
         }
-
         res.clearCookie('token');
         res.redirect('/');
     } catch(err){
         console.log(err)
         res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -321,12 +306,15 @@ router.get('/admin',authMiddleware, accessMiddleware, async (req,res) => {
         try{
             data = await User.find({_id: req.userId});
             res.render('admin', {locals, Infodata, data});  
+            return;
         } catch(err){
-            res.redirect('error');
+            res.status(500).redirect('error');
+            return;
         }         
     } catch (err){
         console.log(err);
         res.status(409).redirect('auth-error');
+        return;
     }
 });
 
@@ -337,16 +325,13 @@ router.get('/people', authMiddleware, accessMiddleware, async (req,res) => {
             description: "Приложение для изучения английского"
         };
         const people = await User.find().sort({name:1});
-        let data;
-        try{
-            data = await User.find({_id: req.userId});
-        } catch(err){
-            data = await User.find({_id: "65fe0bf6604b74d06872ec48"});
-        }
-        res.render('people', {locals,  people, data});   
+        let data = await User.find({_id: req.userId});
+        res.render('people', {locals,  people, data});  
+        return; 
     } catch (err){
         console.log(err);
-        res.redirect('error');
+        res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -357,15 +342,15 @@ router.get('/person/:id',  authMiddleware, accessMiddleware,  async(req,res) => 
             description: "Приложение для изучения английского"
         };
         let slug = req.params.id;
-        const token = req.cookies.token;
-        const decoded = jwt.verify(token, jwtSecret);
-        let dataId = decoded.userId;
-        let data = await User.find({_id: dataId});
+        let data = await User.find({_id: req.userId});
         const userData = await User.findById({_id: slug});
-        res.render('person', {locals, userData,  layout: lessonLayout, data});        
+        res.render('person', {locals, userData,  layout: lessonLayout, data});    
+        return;    
     } catch (err){
         console.log(err);
-        res.status(400).redirect('error');
+        res.status(500).redirect('error');
+        return;
+        
     }
 });
 
@@ -392,9 +377,11 @@ router.post('/becomeAdmin', authMiddleware, accessMiddleware,  async(req,res) =>
             await User.findOneAndUpdate({_id: userId}, {$set: {role: "Admin"}});
         }   
         res.render('people-updated', {locals, data, people});  
+        return;
     } catch(err){
-        console.log(err)
-        res.status(500).render('error');
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -407,13 +394,13 @@ router.get('/add-test',authMiddleware, accessMiddleware, async (req,res) => {
             title: "Mister Smart | Администрирование",
             description: "Приложение для изучения английского"
         };
-        const token = req.cookies.token;
-        const decoded = jwt.verify(token, jwtSecret);
-        let dataId = decoded.userId;
-        data = await User.find({_id: dataId});
-        res.render('add-test', {locals, data});   
+        let data = await User.find({_id: req.userId});
+        res.render('add-test', {locals, data});
+        return;                 
     } catch (err){
         console.log(err);
+        res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -453,13 +440,14 @@ router.post('/add-test', authMiddleware, async(req,res) => {
             res.render('add-test', {locals, data}); 
             return 
         } catch(err){
-            res.redirect('error');
+            res.status(500).redirect('error');
             return
         }      
           
    } catch(err){
     console.log(err);
-    res.status(400).redirect('error');
+    res.status(500).redirect('error');
+    return;
    }
 });
 
@@ -470,15 +458,13 @@ router.get('/add-theme',authMiddleware, accessMiddleware, async (req,res) => {
             title: "Mister Smart | Администрирование",
             description: "Приложение для изучения английского"
         };
-        let data = await Theory.find().count();
-        try{
-            data = await User.find({_id: req.userId});
-        } catch(err){
-            data = await User.find({_id: "65fe0bf6604b74d06872ec48"});
-        }
-        res.render('add-theme', {locals, data});   
+        let data = await User.find({_id: req.userId});
+        res.render('add-theme', {locals, data});  
+        return;               
     } catch (err){
         console.log(err);
+        res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -499,164 +485,174 @@ router.post('/add-theme', authMiddleware, async(req,res) => {
  
      await Theory.create(data);
      res.render('add-theme', {locals})
+     return;
     } catch(err){
-     console.log(err);
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
     }
  });
 
 
 
- router.get('/profile', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Профиль",
-        description: "Приложение для изучения английского"
-    };
-
-    const token = req.cookies.token;
-    if(!token){        
-        res.render('login');
-    }
-    const decoded = jwt.verify(token, jwtSecret);
-    let data1 = decoded.userId;
-
+ router.get('/profile', authMiddleware, async (req,res) => { 
     try{
-        data = await User.find({_id: data1});
+        const locals = {
+            title: "Mister Smart | Профиль",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('profile', {locals, data})
+        return; 
     } catch(err){
-        data = await User.find({_id: "65fe0bf6604b74d06872ec48"});
-    }
-    
-    res.render('profile', {locals, data})   
+        res.status(500).redirect('error');
+        return;
+    }  
 });
 
-router.get('/profile-updated', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Профиль",
-        description: "Приложение для изучения английского"
-    };
-
-    const token = req.cookies.token;
-    
-    const decoded = jwt.verify(token, jwtSecret);
-    let data1 = decoded.userId;
-
+router.get('/profile-updated', authMiddleware, async (req,res) => {    
     try{
-        data = await User.find({_id: data1});
+        const locals = {
+            title: "Mister Smart | Профиль",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('profile-updated', {locals, data})  
+        return;
     } catch(err){
-        res.render('error');
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
     }
-    
-    res.render('profile-updated', {locals, data})   
 });
 
 router.get('/stats', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Статистика",
-        description: "Приложение для изучения английского"
-    };
     try{
-        data = await User.find({_id: req.userId});
+        const locals = {
+            title: "Mister Smart | Тесты",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('stats', {locals, data}) 
+        return;
     } catch(err){
-        data = await User.find({_id: "65fe0bf6604b74d06872ec48"});
-    }
-    res.render('stats', {locals, data})   
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
+    }  
 });
 
 /*Тесты на уровень знания английского */
 router.get('/english-level', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Тесты",
-        description: "Приложение для изучения английского"
-    };
     try{
-        data = await User.find({_id: req.userId});
+        const locals = {
+            title: "Mister Smart | Тесты",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('english-level', {locals, data}) 
+        return;
     } catch(err){
-        data = await User.find({_id: "65fe0bf6604b74d06872ec48"});
-    }
-    res.render('english-level', {locals, data})   
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
+    }      
 });
 
 router.get('/english-a1', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Тест",
-        description: "Приложение для изучения английского"
-    };
     try{
-        data = await User.find({_id: req.userId});
-    } catch(err){
-        res.status(500).render('error');
+        const locals = {
+            title: "Mister Smart | Тест",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('english-a1', {locals, data})  
         return;
-    }
-    res.render('english-a1', {locals, data})   
+    } catch(err){
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
+    }     
 });
 
 router.get('/english-a2', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Тест",
-        description: "Приложение для изучения английского"
-    };
     try{
-        data = await User.find({_id: req.userId});
+        const locals = {
+            title: "Mister Smart | Тест",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('english-a2', {locals, data});
+        return;  
     } catch(err){
-        res.status(500).render('error');
+        console.log(err);
+        res.status(500).redirect('error');
         return;
-    }
-    res.render('english-a2', {locals, data})   
+    }     
 });
 
 router.get('/english-b1', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Тест",
-        description: "Приложение для изучения английского"
-    };
     try{
-        data = await User.find({_id: req.userId});
-    } catch(err){
-        res.status(500).render('error');
+        const locals = {
+            title: "Mister Smart | Тест",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('english-b1', {locals, data})  
         return;
-    }
-    res.render('english-b1', {locals, data})   
+    } catch(err){
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
+    }    
 });
 
 router.get('/english-b2', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Тест",
-        description: "Приложение для изучения английского"
-    };
     try{
-        data = await User.find({_id: req.userId});
-    } catch(err){
-        res.status(500).render('error');
+        const locals = {
+            title: "Mister Smart | Тест",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('english-b2', {locals, data})  
         return;
-    }
-    res.render('english-b2', {locals, data})   
+    } catch(err){
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
+    }     
 });
 
 router.get('/english-c1', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Тест",
-        description: "Приложение для изучения английского"
-    };
     try{
-        data = await User.find({_id: req.userId});
-    } catch(err){
-        res.status(500).render('error');
+        const locals = {
+            title: "Mister Smart | Тест",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('english-c1', {locals, data})  
         return;
-    }
-    res.render('english-c1', {locals, data})   
+    } catch(err){
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
+    }     
 });
 
-router.get('/english-c2', authMiddleware, async (req,res) => {
-    const locals = {
-        title: "Mister Smart | Тест",
-        description: "Приложение для изучения английского"
-    };
+router.get('/english-c2', authMiddleware, async (req,res) => {    
     try{
-        data = await User.find({_id: req.userId});
-    } catch(err){
-        res.status(500).render('error');
+        const locals = {
+            title: "Mister Smart | Тест",
+            description: "Приложение для изучения английского"
+        };
+        let data = await User.find({_id: req.userId});
+        res.render('english-c2', {locals, data});
         return;
-    }
-    res.render('english-c2', {locals, data})   
+    } catch(err){
+        console.log(err);
+        res.status(500).redirect('error');
+        return;
+    }     
 });
 
 router.post('/englishStatsUpdate',  async(req,res) => {
@@ -675,29 +671,30 @@ router.post('/englishStatsUpdate',  async(req,res) => {
         let newStats = String(req.body.level);
         await User.findOneAndUpdate({_id: dataId}, {$set: {level: newStats}});
         res.render('english-level', {locals, data}); 
+        return;
         } catch(err){
         console.log(err)
         res.status(500).render('error');
+        return;
     }
 });
 
 /*Теоретический раздел */
 router.get('/theory', authMiddleware, async(req,res) => {
-    const locals = {
-        title: "Mister Smart | Теория",
-        description: "Теоретический материал"
-    };
-
     try{
-        const token = req.cookies.token;
-        const decoded = jwt.verify(token, jwtSecret);
-        let dataId = decoded.userId;
-        data = await User.find({_id: dataId});
+        const locals = {
+            title: "Mister Smart | Теория",
+            description: "Теоретический материал"
+        };
+        let data = await User.find({_id: req.userId});
         const Theorydata = await Theory.find();
-        res.render('theory', {locals, Theorydata, data});        
-    } catch (err){
+        res.render('theory', {locals, Theorydata, data});   
+        return;     
+    } catch(err){
         console.log(err);
-    }  
+        res.status(500).redirect('error');
+        return;
+    }      
 });
 
 
@@ -709,15 +706,14 @@ router.get('/lesson/:id', authMiddleware, async(req,res) => {
         };
 
         let slug = req.params.id;
-        const token = req.cookies.token;
-        const decoded = jwt.verify(token, jwtSecret);
-        let dataId = decoded.userId;
-        let data = await User.find({_id: dataId});
-
+        let data = await User.find({_id: req.userId});
         const Theorydata = await Theory.findById({_id: slug});
-        res.render('lesson', {locals, Theorydata, layout: lessonLayout, data});        
+        res.render('lesson', {locals, Theorydata, layout: lessonLayout, data});    
+        return;    
     } catch (err){
         console.log(err);
+        res.status(500).redirect('error');
+        return;
     }  
 });
 
@@ -728,17 +724,14 @@ router.get('/tests', authMiddleware, async(req,res) => {
         description: "Тестовый материал"
     };
     try{
-        const token = req.cookies.token;
-        const decoded = jwt.verify(token, jwtSecret);
-        let dataId = decoded.userId;
-        let data = await User.find({_id: dataId});
-
+        let data = await User.find({_id: req.userId});
         const Testdata = await Tests.find();
-        res.render('tests', {locals,Testdata, data});
-
-        
+        res.render('tests', {locals,Testdata, data});   
+        return;     
     } catch (err){
         console.log(err);
+        res.status(500).redirect('error');
+        return;
     }  
 });
 
@@ -749,17 +742,15 @@ router.get('/test/:id', authMiddleware, async(req,res) => {
             title: "Mister Smart | Тест",
             description: "Тестовый материал",
         };
-
         let slug = req.params.id;
-        const token = req.cookies.token;
-        const decoded = jwt.verify(token, jwtSecret);
-        let dataId = decoded.userId;
-        let data = await User.find({_id: dataId});
-
+        let data = await User.find({_id: req.userId});
         const Testdata = await Tests.findById({_id: slug});
-        res.render('test', {locals, Testdata, layout: lessonLayout, data});        
+        res.render('test', {locals, Testdata, layout: lessonLayout, data});    
+        return;    
     } catch (err){
         console.log(err);
+        res.status(500).redirect('error');
+        return;
     }  
 });
 
@@ -782,9 +773,11 @@ router.post('/theoryStatsUpdate',  async(req,res) => {
         await User.findOneAndUpdate({_id: dataId}, {$set: {lessonComplete: newStats}});
         const Theorydata = await Theory.find();
         res.render('theory', {locals, Theorydata, data}); 
+        return;
         } catch(err){
         console.log(err)
-        res.status(500).render('error');
+        res.status(500).redirect('error');
+        return;
     }
 });
 
@@ -800,17 +793,18 @@ router.post('/testStatsUpdate',  async(req,res) => {
         const decoded = jwt.verify(token, jwtSecret);
         let dataId = decoded.userId;
         let data = await User.find({_id: dataId});
+
         let newStats = Number(req.body.count) + 1;
         await User.findOneAndUpdate({_id: dataId}, {$set: {testComplete: newStats}});
         const Testdata = await Tests.find();
         res.render('tests', {locals,Testdata, data});
+        return;
         } catch(err){
         console.log(err)
         res.status(500).render('error');
+        return;
     }
 });
-
-
 
 router.use((req,res) => {
     res.status(404).redirect('404');
