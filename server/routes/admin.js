@@ -252,6 +252,7 @@ router.post('/updateInfo',  async(req,res) => {
         }        
         if(req.body.password !== req.body.password2 || req.body.password.length < 3){
             res.status(400).redirect('/update-error');
+            return;
         }
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const userData = {
@@ -281,6 +282,7 @@ router.post('/profileExit',  async(req,res) => {
         }
         res.clearCookie('token');
         res.redirect('/');
+        return;
     } catch(err){
         console.log(err)
         res.status(500).redirect('error');
