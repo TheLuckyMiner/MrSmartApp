@@ -947,7 +947,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 75vh;
+	min-height: 75vh;
 }
 
 .quiz {
@@ -961,6 +961,7 @@ body{
 	width: 600px;
 	max-width: 95vw;
 	overflow: hidden;
+    margin-bottom: 7vh;
 }
 
 .quiz-header{
@@ -1080,6 +1081,21 @@ body{
 	perspective: 1000px;
 	color: #94ca00;
 }
+
+/*Карточка правильных ответов*/
+.correct{
+    color: var(--green);
+}
+
+.incorrect{
+    color: var(--red);
+}
+
+.userAnswer{
+    font-size: 1rem;
+    margin-bottom: 1vh;
+}
+
 
 /*Теоретический материал*/
 
@@ -1426,6 +1442,14 @@ body{
     .login-error__text{
         font-size: 1rem;
     }
+    .userAnswer{
+        font-size:0.8rem;
+    }
+    .title2{
+        font-size: 0.9rem;
+        margin: 3vh 0;
+        /* text-align: center; */
+    }
     
 }
 
@@ -1454,6 +1478,12 @@ body{
    .agree__inner{
     font-size: 0.8rem;
    }
+   .userAnswer{
+    font-size:0.7rem;
+}
+.title2{
+    font-size: 0.8rem;
+}
 }
 
 @media(max-width: 380px){
