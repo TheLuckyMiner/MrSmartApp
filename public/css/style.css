@@ -59,6 +59,10 @@ body{
     padding: 20px 10px;
 }
 
+.header__logo{
+    margin-left: 10px;
+}
+
 .logo-text{
     color: var(--red);
     font-size: 1.5rem;
@@ -728,11 +732,41 @@ body{
     /* margin-top: 28px; */
     /* margin-top: 215px; */
     margin-top: 100px;
-    
 }
 
 .auth__form-inner{
     margin-top: 75px;
+    width: 100%;
+}
+
+.password__label{
+    position: relative;
+    display:flex;
+    width: 100%;
+}
+
+.password__btn{
+    position: absolute;
+    right: 13px;
+    top: 13px;
+    cursor: pointer;
+}
+
+.password__btn.active::after{
+    opacity: 0;
+}
+
+.password__btn::after{
+    position: absolute;
+    content: '';
+    top: 11px;
+    right: -2px;
+    width: 26px;
+    height: 2px;
+    background: var(--purple);
+    transform: rotate(45deg);
+    transition: .3s all ease;
+    opacity: 1;
 }
 
 /*Страница пользовательского соглашения*/

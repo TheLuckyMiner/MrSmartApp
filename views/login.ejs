@@ -14,7 +14,11 @@
                 <form id='login' action='/login' method="post" class="auth__form">
                     <div class="auth__form-inner">
                         <input type="email" name="email" class="auth__input" placeholder="Email" required>
-                        <input type="password" name='password' class="auth__input" placeholder="Пароль" required>                        
+                        <!-- <input type="password" name='password' class="auth__input" placeholder="Пароль" required>  -->
+                        <label class="label password__label">
+                            <input type="password" name="password" class="auth__input password__input" id="password__input1" placeholder="Пароль">
+                            <div class="password__btn" id="password__btn1"><img src="images/eye.svg" alt="↓"></div>
+                        </label>                       
                     </div>     
                     <input type="submit" id="login-btn" class="auth__submit" value="Войти">               
                     
@@ -22,8 +26,12 @@
                 <form id="register" action="/register" method="post" class="auth__form">                    
                     <input type="text" name="name" class="auth__input" minlength="3" maxlength="40" placeholder="Имя пользователя" required>
                     <input type="email" name="email" class="auth__input" placeholder="Email" required>
-                    <input type="password" name="password" class="auth__input"  minlength="8" placeholder="Пароль" required>
-                    <input type="password" name="password2" class="auth__input" minlength="8" placeholder="Повторите пароль" required>
+                    <!-- <input type="password" name="password" class="auth__input"  minlength="8" placeholder="Пароль" required> -->
+                    <label class="label password__label">
+                        <input type="password" name="password" class="auth__input password__input" id="password__input2" placeholder="Пароль">
+                        <div class="password__btn" id="password__btn2"><img src="images/eye.svg" alt="↓"></div>
+                    </label>  
+                    <input type="password" name="password2" id="password__input3" class="auth__input" minlength="8" placeholder="Повторите пароль" required> 
                     <select class="select auth__input" id="level" name="level" required>
                         <option value="easy" selected disabled>Выберите уровень</option>
                         <option value="Elementary">Начальный</option>
