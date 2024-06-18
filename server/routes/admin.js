@@ -225,8 +225,12 @@ router.post('/register', async(req,res) => {
         try {
             const user = await User.create(userData);
             data = [userData];
-            res.render('login', {locals, data, layout: adminLayout});   
-            return;         
+            const token = jwt.sign({userId: user._id}, jwtSecret);
+            res.cookie('token', token, {httpOnly:true});
+            res.status(200).render('index', {locals, data});
+            return;
+            // res.render('login', {locals, data, layout: adminLayout});   
+            // return;         
         } catch(err){
             if(err.code === 11000){
                 res.status(409).redirect('register-error');
@@ -531,7 +535,7 @@ router.get('/profile-updated', authMiddleware, async (req,res) => {
 router.get('/stats', authMiddleware, async (req,res) => {
     try{
         const locals = {
-            title: "Mister Smart | Тесты",
+            title: "Mister Smart | Статистика",
             description: "Приложение для изучения английского"
         };
         let data = await User.find({_id: req.userId});
